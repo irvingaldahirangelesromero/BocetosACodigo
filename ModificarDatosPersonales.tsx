@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, TextInput, Button, StyleSheet } from "react-native";
+import { View, Text, TextInput, Button, StyleSheet, TouchableOpacity } from "react-native";
 import AntDesign from "@expo/vector-icons/AntDesign";
 
 const UserProfileForm = () => {
@@ -7,9 +7,13 @@ const UserProfileForm = () => {
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [address, setAddress] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const handleSave = () => {
-    console.log("Datos guardados:", { name, email, phone, address });
+    console.log("Datos guardados:", { name, email, phone, address, password });
   };
 
   return (
@@ -45,6 +49,30 @@ const UserProfileForm = () => {
           value={address}
           onChangeText={setAddress}
         />
+        <View style={styles.passwordContainer}>
+          <TextInput
+            style={styles.input}
+            placeholder="Nueva Contraseña"
+            value={password}
+            onChangeText={setPassword}
+            secureTextEntry={!showPassword}
+          />
+          <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
+            <AntDesign name={showPassword ? "eye" : "eyeo"} size={24} color="black" />
+          </TouchableOpacity>
+        </View>
+        <View style={styles.passwordContainer}>
+          <TextInput
+            style={styles.input}
+            placeholder="Confirmar Contraseña"
+            value={confirmPassword}
+            onChangeText={setConfirmPassword}
+            secureTextEntry={!showConfirmPassword}
+          />
+          <TouchableOpacity onPress={() => setShowConfirmPassword(!showConfirmPassword)}>
+            <AntDesign name={showConfirmPassword ? "eye" : "eyeo"} size={24} color="black" />
+          </TouchableOpacity>
+        </View>
         <Button title="Guardar" onPress={handleSave} />
       </View>
       <View style={styles.footer}>
@@ -89,6 +117,18 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     borderWidth: 1,
     borderColor: "#ccc",
+    flex: 1,
+  },
+  passwordContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    backgroundColor: "white",
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: "#ccc",
+    paddingRight: 10,
+    marginBottom: 15,
   },
   footer: {
     backgroundColor: "#3b82f6",
